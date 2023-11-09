@@ -1,0 +1,36 @@
+[project]
+name = "bootstrap-ci"
+version = "0.0.1"
+
+description = "Bootstrap sampling and confidence interval estimation package"
+
+readme = "README.md"
+
+requires-python = ">=3.9"
+
+license = {file = "LICENSE"}
+
+keywords = ["uncertainty", "bootstrap", "confidence intervals"]
+
+authors = [
+  {name = "Urša Zrimšek", email = "ursazrimsek@gmail.com"}
+]
+
+maintainers = [
+  {name = "Urša Zrimšek", email = "ursazrimsek@gmail.com"}
+]
+
+dependencies = [
+  "numpy>=1.22",
+  "numba>=0.53",
+  "scipy>=1.9",
+  "matplotlib>=3.5"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/zrimseku/bootstrap-ci"
+"Bug Reports" = "https://github.com/zrimseku/bootstrap-ci/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
