@@ -35,7 +35,7 @@ class Bootstrap:
             np.random.seed(seed)
         self.b = nr_bootstrap_samples
 
-        if sampling == 'nonparametric':
+        if sampling in ['nonparametric', 'non-parametric']:
             self.bootstrap_indices = np.random.choice(range(self.n), size=[nr_bootstrap_samples, self.n])
 
         elif sampling == 'hierarchical':
@@ -163,7 +163,7 @@ class Bootstrap:
             sd = np.std(self.statistic_values)
             return self.original_statistic_value + sd * norm.ppf(quantiles)
 
-        elif method == 'basic':
+        elif method in ['basic', 'reverse-percentile']:
             tails = np.quantile(self.statistic_values, 1 - quantiles, method=quantile_type)
 
             return 2 * self.original_statistic_value - tails
@@ -190,7 +190,7 @@ class Bootstrap:
 
             return np.quantile(self.statistic_values, corrected, method=quantile_type)
 
-        elif method == 'studentized':   # bootstrap-t, add more possible names for all that have multiple names?
+        elif method in ['studentized', 'bootstrap-t', 'bootstrapt']:
             standard_errors = self.studentized_error_calculation()
             t_samples = (self.statistic_values - self.original_statistic_value) / standard_errors
             se = np.std(self.statistic_values)
