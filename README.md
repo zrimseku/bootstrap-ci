@@ -53,31 +53,25 @@ $$\hat{\theta}\_{bsc}\[\alpha\] = 2\hat{\theta} - \hat{\theta}^*\_{1 - \alpha}.$
 $BC$ does an important correction to the percentile interval. It removes the bias that arises from $\hat{\theta}$ not being the median of the bootstrap distribution, and is thus better in non-symetric problems, where the percentile method can fail.
 The confidence level is estimated by:
 
-```math
-\hat{\theta}_{BC}[\alpha] = \hat{\theta}^*_{\alpha_{BC}}, \\
+$$\hat{\theta}\_{BC}\[\alpha\] = \hat{\theta}^*\_{\alpha_{BC}}, $$
 
-\alpha_{BC} = \Phi\big(2\Phi^{-1}(\hat{b}) + z_\alpha \big),
-```
+$$\alpha_{BC} = \Phi\big(2\Phi^{-1}(\hat{b}) + z_\alpha \big),$$
+
 where $\Phi$ is the CDF of standard normal distribution and $\hat{b}$ is the bias, calculated as the percentage of values from bootstrap distribution that are lower than the parameter's value on the original sample, $\hat{\theta}$.
 
 ### BC<sub>a</sub>
 $BC_a$ does another correction to the $BC$ interval, by computing the acceleration constant $a$, which can account for the skewness of the bootstrap distribution.
 
 This further adjusts the $\alpha_{BCa}$, which is then calculated by:
-```math
-\hat{\theta}_{BCa}[\alpha] = \hat{\theta}^*_{\alpha_{BCa}} \\
 
-\alpha_{BCa} = \Phi\Big(\Phi^{-1}(b) + \frac{\Phi^{-1}(\hat{b}) + z_\alpha}{1 + \hat{a} (\Phi^{-1}(\hat{b}) + z_\alpha)} \Big),
-```
+$$ \hat{\theta}\_{BCa}\[\alpha\] = \hat{\theta}^*\_{\alpha_{BCa}}$$
+
+$$\alpha_{BCa} = \Phi\Big(\Phi^{-1}(b) + \frac{\Phi^{-1}(\hat{b}) + z_\alpha}{1 + \hat{a} (\Phi^{-1}(\hat{b}) + 
+z_\alpha)} \Big),$$
 where $\hat{a}$ is the approximation of the acceleration constant, that can be calculated using leave-one-out jackknife:
 
-$$
-\begin{align*}
-\hat{a} &= \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} \\
-
-U_i &= (n-1)(\hat{\theta}\_. - \hat{\theta}\_{(i)}),
-\end{align*}
-$$
+$$\hat{a} = \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} $$
+$$U_i &= (n-1)(\hat{\theta}\_. - \hat{\theta}\_{(i)}),$$
 where $\hat{\theta}\_{(i)}$ is the estimation of $\theta$ without the $i$-th datapoint and $\hat{\theta}\_.$ is the mean 
 of all $\hat{\theta}_{(i)}$.
 
@@ -102,10 +96,10 @@ We do that by defining $T^* = \dfrac{\hat{\theta}^* - \hat\theta}{\hat{\sigma}^*
 ### Double
 The double bootstrap is made to adjust bias from a single bootstrap iteration with another layer of bootstraps.
 We repeat the bootstrap procedure on each of the bootstrap samples to calculate the bias -- the percentage of times that the parameter on its inner bootstrap sample is smaller from the original parameter's value. We want to take such a limit that $P \{\hat{\theta} \in (-\infty, \hat{\theta}_{double}[\alpha])\} = \alpha$, which is why we need to select the $\alpha$-th quantile of biases $\hat{b}^*$ for the adjusted level $\alpha_{double}$. This leads to:
-\begin{align*}
-\hat{\theta}\_{double}\[\alpha\] &= \hat{\theta}^*\_{\alpha\_{double}} \\ 
-\alpha_{double} &= \hat{b}^*_\alpha.
-\end{align*}
+
+$$\hat{\theta}\_{double}\[\alpha\] &= \hat{\theta}^*\_{\alpha\_{double}} $$ 
+$$\alpha_{double} &= \hat{b}^*_\alpha$$
+
 
 
 # Suggestions on which method and parameters to use
