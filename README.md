@@ -31,7 +31,7 @@ Even though multiple improvements were made, it is probably still the most used 
 The percentile estimation of confidence level $\alpha$ is obtained by taking the $\alpha$ quantile of the bootstrap 
 distribution, which we annotate by 
 
-$$\hat{\theta}_{perc}\[\alpha\] = \hat{\theta}^*_\alpha.$$
+$$\hat{\theta}\_{perc}\[\alpha\] = \hat{\theta}^*_\alpha.$$
 
 In all of our implementations of methods that use quantiles, we used the "median-unbiased" version of quantile calculation.
 
@@ -39,7 +39,7 @@ In all of our implementations of methods that use quantiles, we used the "median
 The standard method, sometimes also called the normal method, assumes that the bootstrap distribution is normal and 
 estimates standard deviation based on that. We get the estimations of confidence levels with
 
-$$\hat{\theta}_{std}\[\alpha\] = \hat{\theta} + \hat{\sigma} z_\alpha,$$
+$$\hat{\theta}\_{std}\[\alpha\] = \hat{\theta} + \hat{\sigma} z_\alpha,$$
 where $\hat{\theta}$ is the parameter value on the original sample, $\hat{\sigma}$ is the standard deviation estimate 
 from the bootstrap distribution and $z_\alpha$ is the z-score of standard normal distribution.
 
@@ -65,17 +65,19 @@ $BC_a$ does another correction to the $BC$ interval, by computing the accelerati
 
 This further adjusts the $\alpha_{BCa}$, which is then calculated by:
 ```math
-\hat{\theta}_{BCa}\[\alpha\] = \hat{\theta}^*_{\alpha_{BCa}} \\
+\hat{\theta}_{BCa}[\alpha] = \hat{\theta}^*_{\alpha_{BCa}} \\
 
 \alpha_{BCa} = \Phi\Big(\Phi^{-1}(b) + \frac{\Phi^{-1}(\hat{b}) + z_\alpha}{1 + \hat{a} (\Phi^{-1}(\hat{b}) + z_\alpha)} \Big),
 ```
 where $\hat{a}$ is the approximation of the acceleration constant, that can be calculated using leave-one-out jackknife:
 
-```math
+$$
+\begin{align*}
 \hat{a} = \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} \\
 
-U_i = (n-1)(\hat{\theta}_. - \hat{\theta}_{(i)}),
-```
+U_i = (n-1)(\hat{\theta}\_. - \hat{\theta}\_{(i)}),
+\end{align*}
+$$
 where $\hat{\theta}\_{(i)}$ is the estimation of $\theta$ without the $i$-th datapoint and $\hat{\theta}\_.$ is the mean 
 of all $\hat{\theta}_{(i)}$.
 
@@ -95,7 +97,7 @@ It is computed by
 $$\hat{\theta}\_{t}\[\alpha\] = \hat{\theta} - \hat{\sigma} T\_{1-\alpha},$$
 where $\hat{\theta}$ and $\hat{\sigma}$ are calculated as described above.
 But since the distribution of T is not known, we need to approximate its percentiles from the bootstrap distribution.
-We do that by defining $T^* = \dfrac{\hat{\theta}^* - \hat\theta}{\hat{\sigma}^*}$, where $\hat{\theta}^*$ is the parameter's value on each bootstrap sample, and $\hat{\sigma}^*$ is obtained by doing another inner bootstrap sampling on each of the outer samples. There are other possible ways to acquire $\hat{\sigma}^*$, but we chose this way as it is very general and fully automatic.
+We do that by defining $T^* = \dfrac{\hat{\theta}^* - \hat\theta}{\hat{\sigma}^*}$, where $\hat{\theta}^\*$ is the parameter's value on each bootstrap sample, and $\hat{\sigma}^*$ is obtained by doing another inner bootstrap sampling on each of the outer samples. There are other possible ways to acquire $\hat{\sigma}^*$, but we chose this way as it is very general and fully automatic.
 
 ### Double
 The double bootstrap is made to adjust bias from a single bootstrap iteration with another layer of bootstraps.
