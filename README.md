@@ -46,8 +46,9 @@ where $\hat{\theta}$ is the parameter value on the original sample, $\hat{\sigma
 from the bootstrap distribution and $z_\alpha$ is the z-score of standard normal distribution.
 
 ### Basic
-In the basic method, also sometimes called the reverse percentile method, we replace the observed bootstrap distribution, $\theta^*$ with $W^* = \theta^* - \hat{\theta}$. This results in 
-$$ \hat{\theta}_{bsc}\[\alpha\] = 2\hat{\theta} - \hat{\theta}^*_{1 - \alpha}. $$
+In the basic method, also sometimes called the reverse percentile method, the observed bootstrap distribution, 
+$\theta^*$, is replaced with $W^* = \theta^* - \hat{\theta}$. This results in 
+$$\hat{\theta}_{bsc}\[\alpha\] = 2\hat{\theta} - \hat{\theta}^*_{1 - \alpha}.$$
 
 
 ### BC
@@ -65,16 +66,17 @@ $BC_a$ does another correction to the $BC$ interval, by computing the accelerati
 
 This further adjusts the $\alpha_{BCa}$, which is then calculated by:
 ```math
-\hat{\theta}_{BCa}[\alpha] &= \hat{\theta}^*_{\alpha_{BCa}} \\
+\hat{\theta}_{BCa}\[\alpha\] &= \hat{\theta}^*_{\alpha_{BCa}} \\
 \alpha_{BCa} &= \Phi\Big(\Phi^{-1}(b) + \frac{\Phi^{-1}(\hat{b}) + z_\alpha}{1 + \hat{a} (\Phi^{-1}(\hat{b}) + z_\alpha)} \Big),
 ```
 where $\hat{a}$ is the approximation of the acceleration constant, that can be calculated using leave-one-out jackknife:
 
-\begin{align*}
+```math
 \hat{a} &= \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} \\
 U_i &= (n-1)(\hat{\theta}_. - \hat{\theta}_{(i)}),
-\end{align*}
-where $\hat{\theta}_{(i)}$ is the estimation of $\theta$ without the $i$-th datapoint and $\hat{\theta}_.$ is the mean of all $\hat{\theta}_{(i)}$.
+```
+where $\hat{\theta}_{(i)}$ is the estimation of $\theta$ without the $i$-th datapoint and $\hat{\theta}_.$ is the mean 
+of all $\hat{\theta}_{(i)}$.
 
 ### Smoothed
 The smoothed method replaces bootstrap distribution with a smoothed version of it ($\Theta^*$), by adding random noise, with a normal kernel centered on 0. % odloči se a dodajamo noise, a smoothamo s kernelom, zdej je zmešan  
