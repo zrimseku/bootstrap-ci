@@ -1,6 +1,6 @@
 # bootstrap-ci
 
-**Toolbox for bootstrap sampling and estimation of confidence intervals.** 
+***Toolbox for bootstrap sampling and estimation of confidence intervals.***
 
 You can choose between hierarchical and non-parametric sampling and combine them 
 with multiple bootstrap methods for estimation of confidence intervals. 
@@ -31,7 +31,9 @@ Even though multiple improvements were made, it is probably still the most used 
 The percentile estimation of confidence level $\alpha$ is obtained by taking the $\alpha$ quantile of the bootstrap 
 distribution, which we annotate by 
 
-$$\hat{\theta}_{perc}[\alpha] = \hat{\theta}^*_\alpha.$$
+$\hat{\theta}_{perc}$$[\alpha]$
+
+$$= \hat{\theta}^*_\alpha.$$
 
 In all of our implementations of methods that use quantiles, we used the "median-unbiased" version of quantile calculation.
 
@@ -58,7 +60,7 @@ The confidence level is estimated by:
 \end{align*}
 where $\Phi$ is the CDF of standard normal distribution and $\hat{b}$ is the bias, calculated as the percentage of values from bootstrap distribution that are lower than the parameter's value on the original sample, $\hat{\theta}$.
 
-### \(BC_a\)
+### BC<sub>a</sub>
 $BC_a$ does another correction to the $BC$ interval, by computing the acceleration constant $a$, which can account for the skewness of the bootstrap distribution.
 
 This further adjusts the $\alpha_{BCa}$, which is then calculated by:
@@ -107,9 +109,14 @@ Percentiles standard
 Lower B if you need faster, we propose 1000 for the lowest B for double
 Use BCa if you need even faster method for mean...
 
-Cite https://github.com/zrimseku/Bootstrap-CI-analysis for more detailed information.
+Repository [Bootstrap-CI-analysis](https://github.com/zrimseku/Bootstrap-CI-analysis) for more detailed information.
 
 # Example of use
+
+### Package download
+
+
+### Producing confidence intervals
 
 ```
 sampple iz normalne
