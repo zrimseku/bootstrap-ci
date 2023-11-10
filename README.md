@@ -83,7 +83,8 @@ $h = 0.9 \min \big( \sigma^\*, \frac{iqr}{1.34} \big),$
 where $iqr$ is the inter-quartile range of bootstrap distribution, the difference between its first and third quartile.
 
 The estimation of the confidence level is then obtained by taking the $\alpha$ quantile of the smoothed distribution:
-$$ \hat{\theta}\_{smooth}\[\alpha\] = \hat{\Theta}^\*\_\alpha. $$
+
+$$\hat{\theta}\_{smooth}\[\alpha\] = \hat{\Theta}^\*\_\alpha.$$
 
 ### Studentized
 The studentized or bootstrap-t method, generalizes the Student's t method, using the distribution of 
@@ -93,8 +94,8 @@ $$\hat{\theta}\_{t}\[\alpha\] = \hat{\theta} - \hat{\sigma} T\_{1-\alpha},$$
 where $\hat{\theta}$ and $\hat{\sigma}$ are calculated as described above.
 But since the distribution of T is not known, we need to approximate its percentiles from the bootstrap distribution.
 We do that by defining $T^\* = \dfrac{\hat{\theta}^\* - \hat\theta}{\hat{\sigma}^\*}$, where $\hat{\theta}^\*$ is the 
-parameter's value on each bootstrap sample, and $\hat{\sigma}^*$ is obtained by doing another inner bootstrap sampling 
-on each of the outer samples. There are other possible ways to acquire $\hat{\sigma}^*$, but we chose this way as it is 
+parameter's value on each bootstrap sample, and $\hat{\sigma}^\*$ is obtained by doing another inner bootstrap sampling 
+on each of the outer samples. There are other possible ways to acquire $\hat{\sigma}^\*$, but we chose this way as it is 
 very general and fully automatic.
 
 ### Double
@@ -105,8 +106,8 @@ We want to take such a limit that $P \{\hat{\theta} \in (-\infty, \hat{\theta}\_
 which is why we need to select the $\alpha$-th quantile of biases $\hat{b}^*$ for the adjusted level $\alpha_{double}$. 
 This leads to:
 
-$$\hat{\theta}\_{double}\[\alpha\] &= \hat{\theta}^*\_{\alpha\_{double}} $$ 
-$$\alpha_{double} &= \hat{b}^*_\alpha$$
+$$\hat{\theta}\_{double}\[\alpha\] &= \hat{\theta}^\*\_{\alpha\_{double}}$$ 
+$$\alpha_{double} &= \hat{b}^\*_\alpha$$
 
 
 
