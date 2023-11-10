@@ -1,17 +1,17 @@
 # bootstrap-ci
 
-*Toolbox for bootstrap sampling and estimation of confidence intervals.* 
+**Toolbox for bootstrap sampling and estimation of confidence intervals.** 
 
 You can choose between hierarchical and non-parametric sampling and combine them 
 with multiple bootstrap methods for estimation of confidence intervals. 
 
-# Sampling
-Bootstrap can be divided into two separate steps. The first one is *bootstrap sampling*, that enables us to get the 
+# Bootstrap sampling
+Bootstrap can be divided into two separate steps. The first one is **bootstrap sampling**, that enables us to get the 
 bootstrap distribution, which approximates the distribution of the observed parameter. 
 There are different approaches to bootstrap sampling, differing primarily in their underlying data assumptions and 
 parameter estimation. In this package you can choose between non-parametric and hierarchical sampling. 
 
-### Non-parametric
+### Non-parametric sampling
 Non-parametric sampling is assumption-free and estimates the underlying data distribution $F$ directly with 
 the original sample $X$. 
 This means that for each bootstrap sample, we are sampling with replacement directly from our original sample. 
@@ -19,10 +19,10 @@ There are $n^n$ different possible samples that can arise with such procedure, b
 intensiveness, we limit ourselves on $B$ independent samples. 
 On each of them we calculate the value of the observed parameter, which gives us the bootstrap distribution.
 
-### Hierarchical
+### Hierarchical sampling
 
 # Bootstrap methods
-After bootstrap sampling, we use one of the *bootstrap methods* to construct a confidence interval from the acquired 
+After bootstrap sampling, we use one of the **bootstrap methods** to construct a confidence interval from the acquired 
 bootstrap distribution. 
 
 ### Percentile
@@ -39,7 +39,7 @@ In all of our implementations of methods that use quantiles, we used the "median
 The standard method, sometimes also called the normal method, assumes that the bootstrap distribution is normal and 
 estimates standard deviation based on that. We get the estimations of confidence levels with
 
-$$\hat{\theta}_{std}[\alpha] = \hat{\theta} + \hat{\sigma} z_\alpha,$$
+$\hat{\theta}_{std}[\alpha] = \hat{\theta} + \hat{\sigma} z_\alpha,$
 where $\hat{\theta}$ is the parameter value on the original sample, $\hat{\sigma}$ is the standard deviation estimate 
 from the bootstrap distribution and $z_\alpha$ is the z-score of standard normal distribution.
 
@@ -62,10 +62,10 @@ where $\Phi$ is the CDF of standard normal distribution and $\hat{b}$ is the bia
 $BC_a$ does another correction to the $BC$ interval, by computing the acceleration constant $a$, which can account for the skewness of the bootstrap distribution.
 
 This further adjusts the $\alpha_{BCa}$, which is then calculated by:
-\begin{align*}
+```math
 \hat{\theta}_{BCa}[\alpha] &= \hat{\theta}^*_{\alpha_{BCa}} \\
 \alpha_{BCa} &= \Phi\Big(\Phi^{-1}(b) + \frac{\Phi^{-1}(\hat{b}) + z_\alpha}{1 + \hat{a} (\Phi^{-1}(\hat{b}) + z_\alpha)} \Big),
-\end{align*}
+```
 where $\hat{a}$ is the approximation of the acceleration constant, that can be calculated using leave-one-out jackknife:
 
 \begin{align*}
