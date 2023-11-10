@@ -31,7 +31,7 @@ Even though multiple improvements were made, it is probably still the most used 
 The percentile estimation of confidence level $\alpha$ is obtained by taking the $\alpha$ quantile of the bootstrap 
 distribution, which we annotate by 
 
-$\hat{\theta}_{perc}$$[\alpha]$
+$\hat{\theta}_{perc}$ $[\alpha]$
 
 $$= \hat{\theta}^*_\alpha.$$
 
@@ -47,7 +47,7 @@ from the bootstrap distribution and $z_\alpha$ is the z-score of standard normal
 
 ### Basic
 In the basic method, also sometimes called the reverse percentile method, we replace the observed bootstrap distribution, $\theta^*$ with $W^* = \theta^* - \hat{\theta}$. This results in 
-$$ \hat{\theta}_{bsc}[\alpha] = 2\hat{\theta} - \hat{\theta}^*_{1 - \alpha}. $$
+$$ \hat{\theta}_{bsc}\[\alpha\] = 2\hat{\theta} - \hat{\theta}^*_{1 - \alpha}. $$
 
 
 ### BC
