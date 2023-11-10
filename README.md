@@ -86,16 +86,24 @@ The estimation of the confidence level is then obtained by taking the $\alpha$ q
 $$ \hat{\theta}\_{smooth}\[\alpha\] = \hat{\Theta}^\*\_\alpha. $$
 
 ### Studentized
-The studentized or bootstrap-t method, generalizes the Student's t method, using the distribution of $T = \dfrac{\hat{\theta} - \theta}{\hat{\sigma}}$ to estimate the confidence level $\alpha$.
+The studentized or bootstrap-t method, generalizes the Student's t method, using the distribution of 
+$T = \dfrac{\hat{\theta} - \theta}{\hat{\sigma}}$ to estimate the confidence level $\alpha$.
 It is computed by
 $$\hat{\theta}\_{t}\[\alpha\] = \hat{\theta} - \hat{\sigma} T\_{1-\alpha},$$
 where $\hat{\theta}$ and $\hat{\sigma}$ are calculated as described above.
 But since the distribution of T is not known, we need to approximate its percentiles from the bootstrap distribution.
-We do that by defining $T^* = \dfrac{\hat{\theta}^* - \hat\theta}{\hat{\sigma}^*}$, where $\hat{\theta}^\*$ is the parameter's value on each bootstrap sample, and $\hat{\sigma}^*$ is obtained by doing another inner bootstrap sampling on each of the outer samples. There are other possible ways to acquire $\hat{\sigma}^*$, but we chose this way as it is very general and fully automatic.
+We do that by defining $T^\* = \dfrac{\hat{\theta}^\* - \hat\theta}{\hat{\sigma}^\*}$, where $\hat{\theta}^\*$ is the 
+parameter's value on each bootstrap sample, and $\hat{\sigma}^*$ is obtained by doing another inner bootstrap sampling 
+on each of the outer samples. There are other possible ways to acquire $\hat{\sigma}^*$, but we chose this way as it is 
+very general and fully automatic.
 
 ### Double
 The double bootstrap is made to adjust bias from a single bootstrap iteration with another layer of bootstraps.
-We repeat the bootstrap procedure on each of the bootstrap samples to calculate the bias -- the percentage of times that the parameter on its inner bootstrap sample is smaller from the original parameter's value. We want to take such a limit that $P \{\hat{\theta} \in (-\infty, \hat{\theta}_{double}[\alpha])\} = \alpha$, which is why we need to select the $\alpha$-th quantile of biases $\hat{b}^*$ for the adjusted level $\alpha_{double}$. This leads to:
+We repeat the bootstrap procedure on each of the bootstrap samples to calculate the bias -- the percentage of times 
+that the parameter on its inner bootstrap sample is smaller from the original parameter's value. 
+We want to take such a limit that $P \{\hat{\theta} \in (-\infty, \hat{\theta}\_{double}\[\alpha\])\} = \alpha$, 
+which is why we need to select the $\alpha$-th quantile of biases $\hat{b}^*$ for the adjusted level $\alpha_{double}$. 
+This leads to:
 
 $$\hat{\theta}\_{double}\[\alpha\] &= \hat{\theta}^*\_{\alpha\_{double}} $$ 
 $$\alpha_{double} &= \hat{b}^*_\alpha$$
