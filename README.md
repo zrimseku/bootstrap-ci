@@ -73,9 +73,9 @@ where $\hat{a}$ is the approximation of the acceleration constant, that can be c
 
 $$
 \begin{align*}
-\hat{a} = \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} \\
+\hat{a} &= \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} \\
 
-U_i = (n-1)(\hat{\theta}\_. - \hat{\theta}\_{(i)}),
+U_i &= (n-1)(\hat{\theta}\_. - \hat{\theta}\_{(i)}),
 \end{align*}
 $$
 where $\hat{\theta}\_{(i)}$ is the estimation of $\theta$ without the $i$-th datapoint and $\hat{\theta}\_.$ is the mean 
