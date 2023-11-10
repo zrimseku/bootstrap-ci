@@ -47,18 +47,18 @@ from the bootstrap distribution and $z_\alpha$ is the z-score of standard normal
 
 ### Basic
 In the basic method, also sometimes called the reverse percentile method, the observed bootstrap distribution, 
-$\theta^*$, is replaced with $W^* = \theta^* - \hat{\theta}$. This results in 
-$$\hat{\theta}_{bsc}\[\alpha\] = 2\hat{\theta} - \hat{\theta}^*_{1 - \alpha}.$$
+$\theta^\*$, is replaced with $W^\* = \theta^* - \hat{\theta}$. This results in 
+$$\hat{\theta}\_{bsc}\[\alpha\] = 2\hat{\theta} - \hat{\theta}^*\_{1 - \alpha}.$$
 
 
 ### BC
 $BC$ does an important correction to the percentile interval. It removes the bias that arises from $\hat{\theta}$ not being the median of the bootstrap distribution, and is thus better in non-symetric problems, where the percentile method can fail.
 The confidence level is estimated by:
 
-\begin{align*}
-\hat{\theta}_{BC}[\alpha] &= \hat{\theta}^*_{\alpha_{BC}}, \\
-\alpha_{BC} &= \Phi\big(2\Phi^{-1}(\hat{b}) + z_\alpha \big),
-\end{align*}
+```math
+\hat{\theta}_{BC}[\alpha] = \hat{\theta}^*_{\alpha_{BC}}, \\
+\alpha_{BC} = \Phi\big(2\Phi^{-1}(\hat{b}) + z_\alpha \big),
+```
 where $\Phi$ is the CDF of standard normal distribution and $\hat{b}$ is the bias, calculated as the percentage of values from bootstrap distribution that are lower than the parameter's value on the original sample, $\hat{\theta}$.
 
 ### BC<sub>a</sub>
@@ -72,8 +72,8 @@ This further adjusts the $\alpha_{BCa}$, which is then calculated by:
 where $\hat{a}$ is the approximation of the acceleration constant, that can be calculated using leave-one-out jackknife:
 
 ```math
-\hat{a} &= \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} \\
-U_i &= (n-1)(\hat{\theta}_. - \hat{\theta}_{(i)}),
+\hat{a} = \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} \\
+U_i = (n-1)(\hat{\theta}_. - \hat{\theta}_{(i)}),
 ```
 where $\hat{\theta}_{(i)}$ is the estimation of $\theta$ without the $i$-th datapoint and $\hat{\theta}_.$ is the mean 
 of all $\hat{\theta}_{(i)}$.
@@ -81,7 +81,7 @@ of all $\hat{\theta}_{(i)}$.
 ### Smoothed
 The smoothed method replaces bootstrap distribution with a smoothed version of it ($\Theta^*$), by adding random noise, with a normal kernel centered on 0. % odloči se a dodajamo noise, a smoothamo s kernelom, zdej je zmešan  
 We determined the kernel's size by a rule of thumb width selection:
-$$ h = 0.9 \min \big( \sigma^*, \frac{iqr}{1.34} \big),$$
+$$h = 0.9 \min \big( \sigma^*, \frac{iqr}{1.34} \big),$$
 where $iqr$ is the inter quartile range of bootstrap distribution, the difference between its first and third quartile.
 
 The estimation of the confidence level is then obtained by taking the $\alpha$ quantile of the smoothed distribution:
