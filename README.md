@@ -70,8 +70,8 @@ $$\alpha_{BCa} = \Phi\Big(\Phi^{-1}(b) + \frac{\Phi^{-1}(\hat{b}) + z_\alpha}{1 
 z_\alpha)} \Big),$$
 where $\hat{a}$ is the approximation of the acceleration constant, that can be calculated using leave-one-out jackknife:
 
-$$\hat{a} = \frac{1}{6}\frac{\sum_{i=1}^n U_i^3}{(\sum_{i=1}^n U_i^2)^\frac{3}{2}} $$
-$$U_i &= (n-1)(\hat{\theta}\_. - \hat{\theta}\_{(i)}),$$
+$$\hat{a} = \frac{1}{6}\frac{\sum U_i^3}{(\sum U_i^2)^\frac{3}{2}} $$
+$$U_i = (n-1)(\hat{\theta}\_. - \hat{\theta}\_{(i)}),$$
 where $\hat{\theta}\_{(i)}$ is the estimation of $\theta$ without the $i$-th datapoint and $\hat{\theta}\_.$ is the mean 
 of all $\hat{\theta}_{(i)}$.
 
@@ -80,7 +80,7 @@ The smoothed method replaces bootstrap distribution with a smoothed version of i
 with a normal kernel centered on 0. 
 We determined the kernel's size by a rule of thumb width selection: 
 $h = 0.9 \min \big( \sigma^\*, \frac{iqr}{1.34} \big),$
-where $iqr$ is the inter quartile range of bootstrap distribution, the difference between its first and third quartile.
+where $iqr$ is the inter-quartile range of bootstrap distribution, the difference between its first and third quartile.
 
 The estimation of the confidence level is then obtained by taking the $\alpha$ quantile of the smoothed distribution:
 $$ \hat{\theta}\_{smooth}\[\alpha\] = \hat{\Theta}^\*\_\alpha. $$
