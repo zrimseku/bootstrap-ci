@@ -30,13 +30,16 @@ The percentile method is the original bootstrap method.
 Even though multiple improvements were made, it is probably still the most used one.
 The percentile estimation of confidence level $\alpha$ is obtained by taking the $\alpha$ quantile of the bootstrap 
 distribution, which we annotate by 
-$$ \hat{\theta}_{perc}[\alpha] = \hat{\theta}^*_\alpha. $$
+
+$$\hat{\theta}_{perc}[\alpha] = \hat{\theta}^*_\alpha.$$
+
 In all of our implementations of methods that use quantiles, we used the "median-unbiased" version of quantile calculation.
 
 ### Standard
 The standard method, sometimes also called the normal method, assumes that the bootstrap distribution is normal and 
 estimates standard deviation based on that. We get the estimations of confidence levels with
-$$ \hat{\theta}_{std}[\alpha] = \hat{\theta} + \hat{\sigma} z_\alpha, $$
+
+$$\hat{\theta}_{std}[\alpha] = \hat{\theta} + \hat{\sigma} z_\alpha,$$
 where $\hat{\theta}$ is the parameter value on the original sample, $\hat{\sigma}$ is the standard deviation estimate 
 from the bootstrap distribution and $z_\alpha$ is the z-score of standard normal distribution.
 
@@ -48,8 +51,6 @@ $$ \hat{\theta}_{bsc}[\alpha] = 2\hat{\theta} - \hat{\theta}^*_{1 - \alpha}. $$
 ### BC
 $BC$ does an important correction to the percentile interval. It removes the bias that arises from $\hat{\theta}$ not being the median of the bootstrap distribution, and is thus better in non-symetric problems, where the percentile method can fail.
 The confidence level is estimated by:
-% $$ \hat{\theta}_{BC}[\alpha] = \hat{\Theta}^*_{\alpha_{BC}} \\
-% \alpha_{BC} = \Phi\big(2\Phi^{-1}(\hat{b}) + z_\alpha \big),$$
 
 \begin{align*}
 \hat{\theta}_{BC}[\alpha] &= \hat{\theta}^*_{\alpha_{BC}}, \\
@@ -57,8 +58,8 @@ The confidence level is estimated by:
 \end{align*}
 where $\Phi$ is the CDF of standard normal distribution and $\hat{b}$ is the bias, calculated as the percentage of values from bootstrap distribution that are lower than the parameter's value on the original sample, $\hat{\theta}$.
 
-### $BC_a$
-$BCa$ does another correction to the $BC$ interval, by computing the acceleration constant $a$, which can account for the skewness of the bootstrap distribution.
+### \(BC_a\)
+$BC_a$ does another correction to the $BC$ interval, by computing the acceleration constant $a$, which can account for the skewness of the bootstrap distribution.
 
 This further adjusts the $\alpha_{BCa}$, which is then calculated by:
 \begin{align*}
