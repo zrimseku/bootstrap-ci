@@ -3,7 +3,44 @@
 ***Toolbox for bootstrap sampling and estimation of confidence intervals.***
 
 You can choose between hierarchical and non-parametric sampling and combine them 
-with multiple bootstrap methods for estimation of confidence intervals. 
+with multiple bootstrap methods for estimation of confidence intervals.
+
+## Table of Contents
+- [Getting Started](#getting-started)
+- [Bootstrap sampling](#bootstrap-sampling)
+- [Boostrap methods](#bootstrap-methods)
+- [Additional examples](#additional-examples)
+- [Suggestions](#suggestions-on-which-method-and-parameters-to-use)
+
+# Getting started
+Installation and a simple use case example.
+
+## Installation
+To use the `bootstrap-ci` package you will need to download it from [pip](https://pypi.org/project/pip/): 
+```
+pip install bootstrap-ci
+```
+## Simple example
+Once you installed the package, you can use `ci` method to obtain confidence intervals for your chosen
+statistic on a given sample:
+```
+import bootstrap-ci as boot
+import numpy as np
+
+np.random.seed(0)
+sample = np.random.normal(0, 1, size=1000)
+bootstrap = boot.Bootstrap(sample, statistic=np.mean)
+
+onesided_95 = bootstrap.ci(coverages=[0.95], nr_bootstrap_samples=1000)
+print(f'One-sided 95% confidence interval for mean is equal to (-inf, {round(onesided_95[0], 3)}).')
+>> One-sided 95% confidence interval for mean is equal to (-inf, 0.004).
+
+twosided_95 = bootstrap.ci(coverages=0.95, side='two', nr_bootstrap_samples=1000)
+print(f'Two-sided 95% confidence interval for mean is equal to ({round(twosided_95[0], 3)}, {round(twosided_95[1], 3)}).')
+>> Two-sided 95% confidence interval for mean is equal to (-0.108, 0.014).
+```
+
+To see more examples for different sampling possibilities go to [Additional examples](#additional-examples).
 
 # Bootstrap sampling
 Bootstrap can be divided into two separate steps. The first one is **bootstrap sampling**, that produces the 
@@ -128,18 +165,7 @@ This leads to:
 $$\hat{\theta}\_{double}\[\alpha\] = \hat{\theta}^\*\_{\alpha\_{double}}$$ 
 $$\alpha_{double} = \hat{b}^\*_\alpha.$$
 
-# Suggestions on which method and parameters to use
-General double
-Percentiles standard
-
-Lower B if you need faster, we propose 1000 for the lowest B for double
-Use BCa if you need even faster method for mean...
-
-Repository [Bootstrap-CI-analysis](https://github.com/zrimseku/Bootstrap-CI-analysis) for more detailed information.
-
-# Example of use
-
-### Package download
+# Additional examples
 
 
 ### Producing confidence intervals
@@ -150,3 +176,14 @@ Bootstrap
 rezultati
 
 ```
+
+# Suggestions on which method and parameters to use
+For the general use case we propose to use the **double** bootstrap method. In the case of confidence interval of
+extreme percentiles, we suggest the user to choose the **standard** bootstrap method.
+
+We suggest to always use the largest number of bootstrap samples that is feasible for your sample size and statistic.
+If you need to speed up the calculations, lower the number of bootstrap samples from the default value of 1000.
+
+Go to repository [Bootstrap-CI-analysis](https://github.com/zrimseku/Bootstrap-CI-analysis) for more detailed 
+information. It includes a detailed study of where bootstrap methods can be used and which one is suggested in 
+certain use case.
