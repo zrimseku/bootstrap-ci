@@ -148,7 +148,7 @@ class Bootstrap:
         if nr_bootstrap_samples is not None:        # we will sample again, otherwise reuse previously sampled data
             self.sample(nr_bootstrap_samples, seed, sampling)
 
-        elif len(self.bootstrap_values) == 0:
+        elif len(self.bootstrap_indices) == 0:
             raise ValueError("Choose the number of boostrap samples to do if you haven't sampled before confidence "
                              "interval calculation.")
 
