@@ -126,13 +126,15 @@ class Bootstrap:
             if noise is not None:
                 self.statistic_values_noise[i] = self.statistic(statistic_input_noise[i, :])
 
-    def ci(self, coverages: np.array, side: str = 'two', method: str = 'bca', nr_bootstrap_samples: int = None,
+    def ci(self, coverages: np.array, side: str = 'one', method: str = 'double', nr_bootstrap_samples: int = None,
            seed: int = None, sampling: str = 'nonparametric', quantile_type: str = 'median_unbiased',
            sampling_args: dict = {'kernel': 'norm', 'width': None}) -> np.array:
         """
         Returns confidence intervals, calculated with selected method.
-        :param coverages: array of coverages for which the values need to be computed
-        :param side: it is possible to choose between 'one' and 'two' sided confidence intervals
+        :param coverages: array of coverages for which the values need to be computed. In the case of two-sided
+                            intervals (side='two') it is a float number.
+        :param side: it is possible to choose between 'one' and 'two' sided confidence intervals. One-sided returns
+                        the left-sided confidence interval threshold x, representing CI in the shape of (-inf, x).
         :param method: how to construct confidence intervals. It is possible to select from
                        'percentile', 'basic', 'bca', 'bc', 'standard', 'smoothed', 'double' and 'studentized'
         :param nr_bootstrap_samples: number of bootstrap samples
@@ -146,6 +148,10 @@ class Bootstrap:
         if nr_bootstrap_samples is not None:        # we will sample again, otherwise reuse previously sampled data
             self.sample(nr_bootstrap_samples, seed, sampling)
 
+        elif len(self.bootstrap_values) == 0:
+            raise ValueError("Choose the number of boostrap samples to do if you haven't sampled before confidence "
+                             "interval calculation.")
+
         if len(self.statistic_values) == 0:
             self.evaluate_statistic(sampling=sampling, sampling_args=sampling_args)
         quantiles = []
@@ -154,7 +160,7 @@ class Bootstrap:
         elif side == 'one':
             quantiles = np.array(coverages)
         else:
-            assert ValueError("Choose between 'one' and 'two'-sided intervals when setting parameter side.")
+            raise ValueError("Choose between 'one' and 'two'-sided intervals when setting parameter side.")
 
         if method == 'percentile':
             return np.quantile(self.statistic_values, quantiles, method=quantile_type)
