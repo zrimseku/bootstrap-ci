@@ -2,7 +2,7 @@
 name = "bootstrap-ci"
 version = "0.0.1"
 
-description = "Bootstrap sampling and confidence interval estimation package"
+description = "Bootstrap sampling and confidence interval estimation package."
 
 readme = "README.md"
 

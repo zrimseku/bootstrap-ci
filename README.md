@@ -9,7 +9,7 @@ with multiple bootstrap methods for estimation of confidence intervals.
 - [Getting Started](#getting-started)
 - [Bootstrap sampling](#bootstrap-sampling)
 - [Boostrap methods](#bootstrap-methods)
-- [Additional examples](#additional-examples)
+- [Parameters](#parameters)
 - [Suggestions](#suggestions-on-which-method-and-parameters-to-use)
 
 # Getting started
@@ -29,18 +29,21 @@ import numpy as np
 
 np.random.seed(0)
 sample = np.random.normal(0, 1, size=1000)
+
 bootstrap = boot.Bootstrap(sample, statistic=np.mean)
 
 onesided_95 = bootstrap.ci(coverages=[0.95], nr_bootstrap_samples=1000)
 print(f'One-sided 95% confidence interval for mean is equal to (-inf, {round(onesided_95[0], 3)}).')
->> One-sided 95% confidence interval for mean is equal to (-inf, 0.004).
+
+>>> One-sided 95% confidence interval for mean is equal to (-inf, 0.004).
 
 twosided_95 = bootstrap.ci(coverages=0.95, side='two', nr_bootstrap_samples=1000)
 print(f'Two-sided 95% confidence interval for mean is equal to ({round(twosided_95[0], 3)}, {round(twosided_95[1], 3)}).')
->> Two-sided 95% confidence interval for mean is equal to (-0.108, 0.014).
+
+>>> Two-sided 95% confidence interval for mean is equal to (-0.108, 0.014).
 ```
 
-To see more examples for different sampling possibilities go to [Additional examples](#additional-examples).
+To see more examples for different sampling possibilities go to [Parameters](#parameters).
 
 # Bootstrap sampling
 Bootstrap can be divided into two separate steps. The first one is **bootstrap sampling**, that produces the 
@@ -165,21 +168,103 @@ This leads to:
 $$\hat{\theta}\_{double}\[\alpha\] = \hat{\theta}^\*\_{\alpha\_{double}}$$ 
 $$\alpha_{double} = \hat{b}^\*_\alpha.$$
 
-# Additional examples
+# Parameters
+Here we describe the possible parameter values on different steps and present some additional examples.
 
+## Initialization
+First a `Bootstrap` instance needs to be initialized. Following parameters can be set:
+- `data`: a `numpy` array containing values of the sample of interest.
+- `statistic`: a callable function that accepts arrays of the same structure as parameter `data` and return a single 
+  value.
+- `use_jit`: bool that selects whether to use the `numba` library to speed up the sampling. Default value is set to 
+  `False`. Change to `True` if you use a big number of bootstrap samples and want to speed up the calculations 
+- `group_indices`: a parameter given only for hierarchical data. A list of lists that tells us how the data points in
+`data` parameter group together. For example indices \[\[\[0, 1], \[2]], \[\[3]]] together with array \[0, 1, 2, 3] tell 
+  us we have one group containing a group with points 0 and 1, and a group with point 2, and another group containing 
+  a group with point 3.
 
-### Producing confidence intervals
-
+You initialize an instance that will estimate the distribution of mean statistic on a given sample from normal 
+distribution with the following code:
 ```
-sampple iz normalne
-Bootstrap
-rezultati
+import bootstrap-ci as boot
+import numpy as np
 
+np.random.seed(0)
+sample = np.random.normal(0, 1, size=1000)
+
+bootstrap = boot.Bootstrap(sample, statistic=np.mean)
 ```
+
+## Sampling
+
+The method `sample` draws bootstrap samples from the original dataset. Following parameters can be used:
+- `nr_bootstrap_samples`: how many bootstrap samples to draw, the size of the bootstrap distribution. Default value is 
+  set to 1000, but we propose to take the largest feasible number to get the best results.
+- `seed`: random seed. Default value `None` skips setting the seed value.
+- `sampling`: select the type of sampling - possible to choose between *nonparametric* or *hierarchical* sampling, default
+  value is *nonparametric*.
+- `sampling_args`: sampling arguments, used only when doing hierarchical sampling. They should be saved in a dictionary,
+  that should include key *method*. Implemented methods available to choose from are *cases* and *random-effect*. 
+  For *cases* sampling a *strategy* also needs to be defined with an array of equal length as is the number of levels 
+  in the dataset, containing zeroes and ones, telling us on which level we sample with replacement and where without.
+
+For example, you can use the non-parametric sampling to get bootstrap distribution of size 1000 on the `bootstrap`
+instance from above.
+```
+bootstrap.sample(nr_bootstrap_samples=1000, seed=0)
+```
+
+The values of the bootstrap distribution are now saved in the `bootstrap.bootstrap_values` parameter.
+
+### Hierarchical sampling
+If you are working with hierarchical data, you need to specify the group structure together with the given sample.
+There are two different hierarchical sampling methods available to choose from, *random-effect* and *cases* sampling.
+Here is an example of *cases* sampling where we sample with replacement on all but the last level:
+```
+# sample that is grouped like this: [[[0.1, -0.2], [1, -0.5]], [[10, 11]]]
+sample = np.array([0.1, -0.2, 1, -0.5, 10, 11])
+indices = [[[0, 1], [2, 3]], [[4, 5]]]
+
+hierarchical_bootstrap = boot.Bootstrap(sample, statistic=np.mean, group_indices=indices)
+
+samp_args = {'method': 'cases', 'strategy': [1, 1, 0]}
+hierarchical_bootstrap.sample(nr_bootstrap_samples=1000, sampling='hierarchical', sampling_args=samp_args)
+```
+
+## Confidence intervals
+After the bootstrap distribution is obtained, you can produce the confidence intervals by calling the method `ci`.
+Following parameters can be set:
+- `coverages`: array of coverage levels for which the values need to be computed. In the case of two-sided
+                            intervals (`side`=*two*) it is a float number.
+- `side`: it is possible to choose between *one* and *two* sided confidence intervals. One-sided returns
+                        the left-sided confidence interval threshold x, representing CI in the shape of (-inf, x).
+- `method`: which method to use for construction of confidence intervals. It is possible to select from
+                       *percentile*, *basic*, *bca*, *bc*, *standard*, *smoothed*, *double* and *studentized*.
+- `nr_bootstrap_samples`: number of bootstrap samples. Default value `None` should be used if the sampling was done 
+  before as a separate step and you don't want to repeat it. If the sampling was not done you should specify the 
+  number of samples.
+- `seed`: random seed. Default value `None` skips setting the seed value.
+- `sampling`: type of sampling, possible to choose between *nonparametric* and *hierarchical*. 
+  Passed to the method `sample`.
+- `sampling_args`: additional arguments used with hierarchical sampling, passed to the method `sample`.
+- `quantile_type`: type of quantiles, possible to select from methods used in `numpy`'s quantile function.
+
+It returns an array of threshold values for confidence intervals of corresponding coverage levels.
+An example to get the one-sided 95% and 97.5% confidence intervals from the `bootstrap` instance from above, 
+where sampling was already done:
+```
+bootstrap.ci(coverages=[0.95, 0.975], method='bca')
+
+>>> array([0.00272853, 0.0119834 ])
+```
+
+## Jackknife after bootstrap
+After bootstrap sampling you can diagnose the sampling process with the use of jackknife after bootstrap method, 
+that draws a plot showing the influence each data point has on the statistic value.
 
 # Suggestions on which method and parameters to use
 For the general use case we propose to use the **double** bootstrap method. In the case of confidence interval of
-extreme percentiles, we suggest the user to choose the **standard** bootstrap method.
+extreme percentiles, we propose to use the **standard** bootstrap method.
 
 We suggest to always use the largest number of bootstrap samples that is feasible for your sample size and statistic.
 If you need to speed up the calculations, lower the number of bootstrap samples from the default value of 1000.
