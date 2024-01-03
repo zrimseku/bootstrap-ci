@@ -5,7 +5,7 @@
 You can choose between hierarchical and non-parametric sampling and combine them 
 with multiple bootstrap methods for estimation of confidence intervals.
 
-This initial version is adapted for a research paper on bootstrap sampling. Next version will be adjusted for ease of use.
+*This initial version is adapted for a research paper on bootstrap sampling. Next version will be adjusted for ease of use.*
 
 ## Table of Contents
 - [Getting Started](#getting-started)
